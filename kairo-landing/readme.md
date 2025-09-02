@@ -2,7 +2,7 @@
 
 Kairo is a sleek, modern landing page designed for AI-powered trading and behavioral finance tools. This website showcases features, real-time analytics, product roadmap, and a sign-up section for early adopters.
 
-🚀 Live Demo: kairolanding.netlify.app
+🚀 Live Demo: https://kairolanding.netlify.app/
 
 ✨ **Features**
 
