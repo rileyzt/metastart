@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kairo - Your AI Trading Companion</title>
+    <meta name="description" content="Trade Smarter. Think Faster. Win More. Revolutionary AI-powered behavioral finance and analytics tool for traders.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'kairo-green': '#00ff99',
+                        'kairo-dark': '#0a0a0a'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { 
+            background-color: #000000; 
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Smooth animations */
+        .fade-in-up { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .fade-in-up.animate { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        
+        .fade-in { 
+            opacity: 0; 
+            transition: opacity 0.6s ease-out; 
+        }
+        .fade-in.animate { 
+            opacity: 1; 
+        }
+        
+        /* Hover effects */
+        .hover-lift:hover { 
+            transform: translateY(-5px); 
+            transition: transform 0.3s ease; 
+        }
+        
+        .glow-green { 
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.3); 
+        }
+        .glow-green:hover { 
+            box-shadow: 0 0 30px rgba(0, 255, 153, 0.5); 
+        }
+        
+        /* Timeline animation */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Counter animation */
+        .counter { 
+            font-variant-numeric: tabular-nums; 
+        }
+        
+        /* Gradient backgrounds */
+        .gradient-hero {
+            background: linear-gradient(135deg, #000000 0%, #001a0d 50%, #000000 100%);
+        }
+        
+        .gradient-radial {
+            background: radial-gradient(circle at center, rgba(0, 255, 153, 0.1) 0%, transparent 70%);
+        }
+        
+        /* Grid pattern */
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 255, 153, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 153, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #00ff99; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-black/80 backdrop-blur-md border-b border-kairo-green/20" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-kairo-green to-green-600 rounded-lg flex items-center justify-center">
+                        <span class="text-black font-bold text-lg">K</span>
+                    </div>
+                    <span class="text-white text-xl font-bold">Kairo</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-kairo-green px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+                    <a href="#analytics" class="text-gray-300 hover:text-kairo-green px-3 py-2 rounded-md text-sm font-medium transition-colors">Analytics</a>
+                    <a href="#timeline" class="text-gray-300 hover:text-kairo-green px-3 py-2 rounded-md text-sm font-medium transition-colors">Timeline</a>
+                    <a href="#contact" class="text-gray-300 hover:text-kairo-green px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                </div>
+                
+                <!-- CTA Button -->
+                <button class="hidden md:block bg-kairo-green hover:bg-green-400 text-black px-6 py-2 rounded-lg font-medium transition-all duration-200 glow-green">
+                    Try Kairo
+                </button>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-white p-2" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center gradient-hero relative overflow-hidden">
+        <!-- Background elements -->
+        <div class="absolute inset-0 grid-pattern opacity-20"></div>
+        <div class="absolute inset-0 gradient-radial"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Powered by badge -->
+            <div class="fade-in-up inline-flex items-center px-4 py-2 rounded-full bg-kairo-green/10 border border-kairo-green/30 mb-8">
+                <svg class="w-4 h-4 text-kairo-green mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-sm text-kairo-green font-medium">Powered by MetaStart</span>
+            </div>
+            
+            <!-- Main headline -->
+            <h1 class="fade-in-up text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6">
+                Your AI Trading<br>
+                <span class="bg-gradient-to-r from-kairo-green to-green-600 bg-clip-text text-transparent">Companion</span>
+            </h1>
+            
+            <!-- Tagline -->
+            <p class="fade-in-up text-xl sm:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+                Trade Smarter. Think Faster. Win More.
+            </p>
+            
+            <!-- Description -->
+            <p class="fade-in-up text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Master your psychology with behavioral finance AI that unlocks professional insights.
+            </p>
+            
+            <!-- CTA Button -->
+            <div class="fade-in-up">
+                <button class="bg-kairo-green hover:bg-green-400 text-black px-8 py-4 rounded-xl font-semibold text-lg glow-green hover-lift transition-all duration-300">
+                    Try Kairo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-black relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section header -->
+            <div class="text-center mb-20 fade-in-up">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-kairo-green/10 border border-kairo-green/30 mb-6">
+                    <span class="text-sm text-kairo-green font-medium">Revolutionize Your Trading Game</span>
+                </div>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Powerful Features
+                </h2>
+            </div>
+
+            <!-- Features grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="fade-in-up hover-lift p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-kairo-green/50 transition-all duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 p-4 mb-6">
+                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Behavioral Finance</h3>
+                    <p class="text-gray-400">Understand your psychology with behavioral analysis</p>
+                </div>
+                
+                <div class="fade-in-up hover-lift p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-kairo-green/50 transition-all duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 p-4 mb-6">
+                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Trading Behavior</h3>
+                    <p class="text-gray-400">Real-time analysis of your trading patterns</p>
+                </div>
+                
+                <div class="fade-in-up hover-lift p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-kairo-green/50 transition-all duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-kairo-green to-emerald-500 p-4 mb-6">
+                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AI Insights</h3>
+                    <p class="text-gray-400">Generate actionable insights with AI</p>
+                </div>
+                
+                <div class="fade-in-up hover-lift p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-kairo-green/50 transition-all duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-teal-500 to-green-500 p-4 mb-6">
+                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Trading Journal</h3>
+                    <p class="text-gray-400">Intelligent journaling for deeper analysis</p>
+                </div>
+                
+                <div class="fade-in-up hover-lift p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-kairo-green/50 transition-all duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 p-4 mb-6">
+                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Health Monitor</h3>
+                    <p class="text-gray-400">Track your trading wellness and stress</p>
+                </div>
+                
+                <div class="fade-in-up hover-lift p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-700/50 hover:border-kairo-green/50 transition-all duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 p-4 mb-6">
+                        <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AI Assistant</h3>
+                    <p class="text-gray-400">24/7 AI companion for trading support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Visualization Section -->
+    <section id="analytics" class="py-24 bg-gradient-to-b from-black via-gray-900/30 to-black relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section header -->
+            <div class="text-center mb-16 fade-in-up">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 mb-6">
+                    <span class="text-sm text-blue-400 font-medium">See Your Trading Mind</span>
+                </div>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Real-time Analytics
+                </h2>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16">
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-kairo-green/10 to-emerald-500/5 border border-kairo-green/20 hover-lift fade-in-up">
+                    <div class="text-5xl font-bold text-kairo-green mb-2 counter" data-target="94">0</div>
+                    <div class="text-gray-400 font-medium">Success Control</div>
+                </div>
+                
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/5 border border-blue-500/20 hover-lift fade-in-up">
+                    <div class="text-5xl font-bold text-blue-400 mb-2">+<span class="counter" data-target="247">0</span></div>
+                    <div class="text-gray-400 font-medium">Performance</div>
+                </div>
+                
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 border border-purple-500/20 hover-lift fade-in-up">
+                    <div class="text-5xl font-bold text-purple-400 mb-2"><span class="counter" data-target="12">0</span>ms</div>
+                    <div class="text-gray-400 font-medium">Response Time</div>
+                </div>
+            </div>
+
+            <!-- Interactive Dashboard -->
+            <div class="fade-in-up max-w-5xl mx-auto">
+                <div class="p-8 rounded-3xl bg-gradient-to-br from-gray-900/80 to-gray-800/40 border border-gray-700/50">
+                    <h3 class="text-2xl font-bold text-white mb-8">Interactive Dashboard</h3>
+                    <div class="h-64 rounded-xl bg-gradient-to-r from-gray-800/30 to-gray-700/20 border border-gray-600/30 flex items-center justify-center">
+                        <div class="text-gray-400 font-medium">Behavioral Analytics Visualization</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="py-24 bg-black relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section header -->
+            <div class="text-center mb-20 fade-in-up">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Product Timeline
+                </h2>
+            </div>
+
+            <!-- Timeline -->
+            <div class="relative">
+                <!-- Central line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-kairo-green/50 to-purple-500/50"></div>
+
+                <!-- Timeline items -->
+                <div class="space-y-12">
+                    <div class="timeline-item relative flex items-center justify-start">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 z-10 w-16 h-16 rounded-full bg-kairo-green border-4 border-green-400 flex items-center justify-center text-black font-bold">
+                            ✓
+                        </div>
+                        <div class="w-full max-w-md mr-8">
+                            <div class="p-8 rounded-2xl bg-green-900/20 border border-green-500/30">
+                                <div class="flex items-center mb-4">
+                                    <div class="text-3xl font-bold text-green-400 mr-3">Oct 21</div>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Guardrails Stack Rollout</h3>
+                                <h4 class="text-lg font-medium text-green-300 mb-4">For ML/AI Safety & Responsibility</h4>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
+                                    ✓ Completed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item relative flex items-center justify-end">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 z-10 w-16 h-16 rounded-full bg-blue-500 border-4 border-blue-400 flex items-center justify-center animate-pulse">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5z"/>
+                            </svg>
+                        </div>
+                        <div class="w-full max-w-md ml-8">
+                            <div class="p-8 rounded-2xl bg-blue-900/20 border border-blue-500/30 glow-green">
+                                <div class="flex items-center mb-4">
+                                    <div class="text-3xl font-bold text-blue-400 mr-3">Oct 21</div>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Core Predictive Pipeline</h3>
+                                <h4 class="text-lg font-medium text-blue-300 mb-4">Enhanced Decision Support</h4>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                                    ● In Progress
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-24 bg-gradient-to-br from-black via-gray-900/50 to-black relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in-up">
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Join the Trading Revolution
+                </h2>
+                <p class="text-xl text-gray-400 mb-12">
+                    Be among the first to experience the future of AI-powered trading
+                </p>
+                
+                <!-- Email signup -->
+                <form class="max-w-md mx-auto mb-12" id="email-form">
+                    <div class="relative">
+                        <input 
+                            type="email" 
+                            placeholder="Enter your email address"
+                            required
+                            class="w-full px-6 py-4 pr-32 rounded-xl bg-gray-900/50 border-2 border-gray-700/50 text-white placeholder-gray-400 focus:border-kairo-green focus:outline-none transition-all duration-300"
+                            id="email-input"
+                        >
+                        <button 
+                            type="submit"
+                            class="absolute right-2 top-2 bottom-2 px-6 bg-kairo-green hover:bg-green-400 text-black font-semibold rounded-lg transition-all duration-200 glow-green"
+                        >
+                            Join
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Trust indicators -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-gray-400 text-sm">
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4 text-kairo-green" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        No spam, ever
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4 text-kairo-green" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        Exclusive access
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4 text-kairo-green" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Cancel anytime
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo and description -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-kairo-green to-green-600 rounded-xl flex items-center justify-center">
+                            <span class="text-black font-bold text-xl">K</span>
+                        </div>
+                        <span class="text-white text-2xl font-bold">Kairo</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 max-w-md">
+                        Your AI Trading Companion
+                    </p>
+                    <p class="text-gray-500 text-xs">
+                        © 2024 Kairo. All rights reserved.
+                    </p>
+                </div>
+                
+                <!-- Links -->
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-kairo-green text-sm transition-colors">Features</a></li>
+                        <li><a href="#analytics" class="text-gray-400 hover:text-kairo-green text-sm transition-colors">Analytics</a></li>
+                        <li><a href="#timeline" class="text-gray-400 hover:text-kairo-green text-sm transition-colors">Timeline</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-kairo-green text-sm transition-colors">Privacy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-kairo-green text-sm transition-colors">Terms</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-kairo-green text-sm transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in-up, .fade-in, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            updateCounter();
+        }
+
+        // Animate counters when they come into view
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.dataset.target);
+                    animateCounter(counter, target);
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.counter').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Email form handling
+        document.getElementById('email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('email-input');
+            const email = emailInput.value;
+            
+            if (email) {
+                // Simple success message
+                emailInput.value = '';
+                emailInput.placeholder = 'Thanks! You\'re on the list 🎉';
+                emailInput.style.borderColor = '#00ff99';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    emailInput.placeholder = 'Enter your email address';
+                    emailInput.style.borderColor = '';
+                }, 3000);
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navbar = document.getElementById('navbar');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            // Simple mobile menu toggle (you can expand this)
+            console.log('Mobile menu clicked');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-black/90');
+            } else {
+                navbar.classList.remove('bg-black/90');
+            }
+        });
+
+        // Add staggered animation delays
+        document.querySelectorAll('.fade-in-up').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
