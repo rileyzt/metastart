@@ -20,8 +20,8 @@ crewai install
 ```
 ### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
+**Add your `OPENAI_API_KEY/GROQ_API_KEY` into the `.env` file**
+(although this midel has been tested and prototyped with OLLAMA/llama3.2)
 - Modify `src/stock_picker/config/agents.yaml` to define your agents
 - Modify `src/stock_picker/config/tasks.yaml` to define your tasks
 - Modify `src/stock_picker/crew.py` to add your own logic, tools and specific args
@@ -52,3 +52,4 @@ For support, questions, or feedback regarding the StockPicker Crew or crewAI.
 - [Chat with our docs](https://chatg.pt/DWjSBZn)
 
 Let's create wonders together with the power and simplicity of crewAI.
+
